@@ -1,15 +1,39 @@
-*.iml
-.gradle
-/local.properties
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
-.DS_Store
+# Gradle and Build
+.gradle/
+build/
+**/build/
 /build
-/captures
+
+# IntelliJ/Android Studio
+.idea/
+*.iml
+*.iws
+*.ipr
+/out/
+
+# Android Specific
+local.properties
+/captures/
 .externalNativeBuild
 .cxx
-local.properties
+
+# Kotlin
+.kotlin/
+kotlin-daemon-*.sys.err
+kotlin-daemon-*.sys.out
+
+# Annotation Processors / KSP / KAPT generated files
+# Usually covered by build/ but added for safety
+**/generated/
+**/build/generated/
+
+# OS Specific
+.DS_Store
+Thumbs.db
+
+# Misc
+*.log
+*.jks
+*.keystore
+google-services.json
+secrets.properties
