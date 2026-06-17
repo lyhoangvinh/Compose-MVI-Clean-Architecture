@@ -55,7 +55,7 @@ domain/
 
 1.  **Clone the project:**
     ```bash
-    git clone https://github.com/your-username/compose-mvi-clean-architecture.git
+    git clone https://github.com/lyhoangvinh/Compose-MVI-Clean-Architecture
     ```
 2.  **Open with Android Studio:** (Ladybug version or newer recommended).
 3.  **Sync Gradle:** Wait for the library download process to complete.
