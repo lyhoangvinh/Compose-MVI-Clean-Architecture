@@ -7,9 +7,9 @@ plugins {
 
 android {
     namespace = "com.base.data"
-    compileSdk = 35
+    compileSdk = libs.versions.compile.sdk.get().toInt()
     defaultConfig {
-        minSdk = 26
+        minSdk = libs.versions.min.sdk.get().toInt()
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -18,6 +18,12 @@ android {
     kotlin {
         jvmToolchain(17)
     }
+}
+
+ksp {
+    // Commit generated JSON schemas when real entities are added; they make
+    // migration tests and release reviews reproducible.
+    arg("room.schemaLocation", "$projectDir/schemas")
 }
 
 dependencies {

@@ -1,6 +1,33 @@
-# Compose MVI Clean Architecture
+# Compose MVI Clean Architecture – Production Template
 
-A Boilerplate Android project using **Jetpack Compose**, following **Clean Architecture** principles and the **MVI (Model-View-Intent)** pattern. Designed for scalability, maintainability, and testability.
+A reusable Kotlin Android template using **Jetpack Compose**, **Material 3**, **Clean Architecture** and the **MVI (Model-View-Intent)** pattern. It intentionally contains no product services, analytics, authentication, Firebase, or flavors.
+
+## Platform baseline
+
+- API 26 minimum; compile/target API 36 (Android 16).
+- JDK 17, AGP 8.10.1, and Gradle 8.11.1 are deliberately pinned as a compatible toolchain.
+- `MainActivity` installs the AndroidX splash screen before startup and calls `enableEdgeToEdge()` before composing UI.
+- The activity opts into Android's predictive-back dispatcher.
+
+### Insets contract
+
+Use `AppScaffold` for full-screen Compose destinations. It is the default boundary for display cutouts, status/navigation bars, gesture navigation, and IME. Its content lambda receives an already-safe modifier:
+
+```kotlin
+AppScaffold(topBar = { TopAppBar(title = { Text("Screen") }) }) { contentModifier ->
+    LazyColumn(modifier = contentModifier) { /* content */ }
+}
+```
+
+Material `TopAppBar` and `NavigationBar` consume their own visual insets. Do not add fixed system-bar heights or duplicate system/IME padding inside a normal `AppScaffold` screen. Custom dialogs and sheets should apply their appropriate `WindowInsets` at their own boundary.
+
+### Release and data policy
+
+- Release builds run R8 and resource shrinking. Do not disable either to solve a library problem.
+- Room uses KSP and exports schemas to `data/schemas`. Add migrations for real schema changes; the template intentionally does not use destructive migration fallback.
+- Moshi models should use `@JsonClass(generateAdapter = true)`, which produces R8-safe generated adapters.
+- Hilt, Room, and Moshi generated code have library consumer rules. `app/proguard-rules.pro` intentionally has no broad keep rules.
+- HTTP body logging is debug-only, so release builds do not log request/response contents.
 
 ## 🚀 Tech Stack
 
@@ -57,9 +84,10 @@ domain/
     ```bash
     git clone https://github.com/lyhoangvinh/Compose-MVI-Clean-Architecture.git
     ```
-2.  **Open with Android Studio:** (Ladybug version or newer recommended).
-3.  **Sync Gradle:** Wait for the library download process to complete.
-4.  **Run the project:** Click `Run` to install on a virtual or physical device.
+2.  **Install JDK 17** and set `JAVA_HOME` to it.
+3.  **Open with Android Studio:** use a current stable release with JDK 17 selected.
+4.  **Verify:** run `./gradlew clean test lint assembleDebug assembleRelease` (or `gradlew.bat` on Windows).
+5.  **Run:** install a debug or release APK on a virtual or physical device.
 
 ## 📝 Key Components
 

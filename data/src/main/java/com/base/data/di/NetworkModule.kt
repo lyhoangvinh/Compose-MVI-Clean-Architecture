@@ -36,14 +36,15 @@ object NetworkModule {
     @Provides @Singleton
     fun provideOkHttpClient(
         authInterceptor: AuthInterceptor,
-        loggingInterceptor: HttpLoggingInterceptor
-    ): OkHttpClient = OkHttpClient.Builder()
-        .addInterceptor(authInterceptor)
-        .addInterceptor(loggingInterceptor)
-        .connectTimeout(TIMEOUT_SECONDS, TimeUnit.SECONDS)
-        .readTimeout(TIMEOUT_SECONDS, TimeUnit.SECONDS)
-        .writeTimeout(TIMEOUT_SECONDS, TimeUnit.SECONDS)
-        .build()
+        loggingInterceptor: HttpLoggingInterceptor,
+        @DebugLogging debugLogging: Boolean
+    ): OkHttpClient = OkHttpClient.Builder().apply {
+        addInterceptor(authInterceptor)
+        if (debugLogging) addInterceptor(loggingInterceptor)
+        connectTimeout(TIMEOUT_SECONDS, TimeUnit.SECONDS)
+        readTimeout(TIMEOUT_SECONDS, TimeUnit.SECONDS)
+        writeTimeout(TIMEOUT_SECONDS, TimeUnit.SECONDS)
+    }.build()
 
     @Provides @Singleton
     fun provideRetrofit(okHttpClient: OkHttpClient, moshi: Moshi): Retrofit =

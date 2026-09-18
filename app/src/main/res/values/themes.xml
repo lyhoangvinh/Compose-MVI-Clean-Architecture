@@ -1,3 +1,9 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Compose owns the visible UI. This theme only establishes a clean window before Compose starts. -->
     <style name="Theme.BaseApp" parent="android:Theme.Material.Light.NoActionBar" />
+
+    <style name="Theme.BaseApp.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_splash</item>
+        <item name="postSplashScreenTheme">@style/Theme.BaseApp</item>
+    </style>
 </resources>

@@ -8,17 +8,18 @@ plugins {
 
 android {
     namespace = "com.base.app"
-    compileSdk = 36
+    compileSdk = libs.versions.compile.sdk.get().toInt()
     defaultConfig {
         applicationId = "com.base.app"
-        minSdk = 26
-        targetSdk = 36
+        minSdk = libs.versions.min.sdk.get().toInt()
+        targetSdk = libs.versions.target.sdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
     }
     buildTypes {
         release {
             isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
@@ -48,6 +49,7 @@ dependencies {
     implementation(libs.compose.material.icons)
     implementation(libs.compose.activity)
     implementation(libs.compose.runtime)
+    implementation(libs.core.splashscreen)
     implementation(libs.navigation.compose)
     implementation(libs.hilt.navigation.compose)
     implementation(libs.lifecycle.viewmodel.compose)

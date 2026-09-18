@@ -9,7 +9,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -18,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.base.app.base.BaseScreen
+import com.base.app.ui.components.AppScaffold
 import com.base.app.ui.components.LoadingIndicator
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -39,7 +39,7 @@ fun DetailScreen(
             }
         }
     ) { state, onIntent ->
-        Scaffold(
+        AppScaffold(
             topBar = {
                 TopAppBar(
                     title = { Text("Detail") },
@@ -50,12 +50,12 @@ fun DetailScreen(
                     }
                 )
             }
-        ) { padding ->
+        ) { contentModifier ->
             if (state.isLoading) {
-                LoadingIndicator(modifier = Modifier.padding(padding))
+                LoadingIndicator(modifier = contentModifier)
             } else {
                 Column(
-                    modifier = Modifier.fillMaxSize().padding(padding).padding(16.dp)
+                    modifier = contentModifier.padding(16.dp)
                 ) {
                     Text(text = state.content, style = MaterialTheme.typography.bodyLarge)
                 }

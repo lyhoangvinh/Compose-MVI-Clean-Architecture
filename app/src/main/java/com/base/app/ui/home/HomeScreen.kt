@@ -9,7 +9,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.ListItem
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
@@ -20,6 +19,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.base.app.base.BaseScreen
+import com.base.app.ui.components.AppScaffold
 import com.base.app.ui.components.ErrorView
 import com.base.app.ui.components.LoadingIndicator
 import kotlinx.coroutines.launch
@@ -42,22 +42,22 @@ fun HomeScreen(
             }
         }
     ) { state, onIntent ->
-        Scaffold(
+        AppScaffold(
             topBar = { TopAppBar(title = { Text("Home") }) },
             snackbarHost = { SnackbarHost(snackbarHostState) }
-        ) { padding ->
+        ) { contentModifier ->
             when {
-                state.isLoading -> LoadingIndicator(modifier = Modifier.padding(padding))
+                state.isLoading -> LoadingIndicator(modifier = contentModifier)
                 state.error != null -> ErrorView(
                     message = state.error,
                     onRetry = { onIntent(HomeIntent.Refresh) },
-                    modifier = Modifier.padding(padding)
+                    modifier = contentModifier
                 )
                 state.items.isEmpty() -> com.base.app.ui.components.EmptyView(
-                    modifier = Modifier.padding(padding)
+                    modifier = contentModifier
                 )
                 else -> LazyColumn(
-                    modifier = Modifier.fillMaxSize().padding(padding)
+                    modifier = contentModifier
                 ) {
                     items(state.items) { item ->
                         ListItem(
